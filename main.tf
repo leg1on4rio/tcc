@@ -173,8 +173,9 @@ resource "aws_instance" "zabbix_server" {
  #!/bin/bash
  curl -fsSL https://get.docker.com -o get-docker.sh
  sudo sh get-docker.sh
- wget https://github.com/leg1on4rio/tcc/blob/master/docker-compose.yml
- docker-compose up -d
+ wget https://raw.githubusercontent.com/leg1on4rio/tcc/master/docker-compose.yml
+ sudo apt install docker-compose -y
+ sudo docker-compose up -d
  EOF
  monitoring = true
  subnet_id = aws_subnet.tcc-public-1.id
