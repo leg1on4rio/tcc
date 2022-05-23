@@ -152,7 +152,7 @@ resource "aws_instance" "app_wordpress" {
  #!/bin/bash
  sudo apt update && sudo apt install curl ansible unzip -y
  cd /tmp
- wget https://esseeutenhocertezaqueninguemcriou.s3.amazonaws.com/ansible.zip
+ wget https://github.com/leg1on4rio/tcc/raw/master/ansible.zip
  unzip ansible.zip
  sudo ansible-playbook wordpress.yml
  EOF
@@ -173,11 +173,8 @@ resource "aws_instance" "zabbix_server" {
  #!/bin/bash
  curl -fsSL https://get.docker.com -o get-docker.sh
  sudo sh get-docker.sh
- sudo docker network create --subnet 172.20.0.0/16 --ip-range 172.20.240.0/20 zabbix-net
- sudo docker run --name postgres-server -t -e POSTGRES_USER="zabbix" -e POSTGRES_PASSWORD="zabbix_pwd" -e POSTGRES_DB="zabbix" --network=zabbix-net --restart unless-stopped -d postgres:latest
- sudo docker run --name zabbix-snmptraps -t -v /zbx_instance/snmptraps:/var/lib/zabbix/snmptraps:rw -v /var/lib/zabbix/mibs:/usr/share/snmp/mibs:ro --network=zabbix-net -p 162:1162/udp --restart unless-stopped -d zabbix/zabbix-snmptraps:alpine-5.4-latest
- sudo docker run --name zabbix-server-pgsql -t -e DB_SERVER_HOST="postgres-server" -e POSTGRES_USER="zabbix" -e POSTGRES_PASSWORD="zabbix_pwd" -e POSTGRES_DB="zabbix" -e ZBX_ENABLE_SNMP_TRAPS="true" --network=zabbix-net -p 10051:10051 --volumes-from zabbix-snmptraps --restart unless-stopped -d zabbix/zabbix-server-pgsql:alpine-5.4-latest
- sudo docker run --name zabbix-web-nginx-pgsql -t -e ZBX_SERVER_HOST="zabbix-server-pgsql" -e DB_SERVER_HOST="postgres-server" -e POSTGRES_USER="zabbix" -e POSTGRES_PASSWORD="zabbix_pwd" -e POSTGRES_DB="zabbix" --network=zabbix-net -p 443:8443 -p 80:8080 -v /etc/ssl/nginx:/etc/ssl/nginx:ro --restart unless-stopped -d zabbix/zabbix-web-nginx-pgsql:alpine-5.4-latest
+ wget https://github.com/leg1on4rio/tcc/blob/master/docker-compose.yml
+ docker-compose up -d
  EOF
  monitoring = true
  subnet_id = aws_subnet.tcc-public-1.id
