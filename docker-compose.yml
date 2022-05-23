@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.3'
 
 networks:
   network-zabbix:
@@ -8,6 +8,7 @@ services:
   mysql:
     container_name: mysql
     image: mysql:5.7
+    command:  --character-set-server=utf8 --collation-server=utf8_bin
     networks:
       - network-zabbix
     ports:
@@ -19,7 +20,6 @@ services:
       - MYSQL_DATABASE=zabbix
       - MYSQL_USER=zabbix
       - MYSQL_PASSWORD=123abc@@
-
   zabbix-server:
     container_name: zabbix-server
     image: zabbix/zabbix-server-mysql:ubuntu-5.0.1
@@ -76,21 +76,4 @@ services:
     depends_on:
       - mysql
       - zabbix-server
-  zabbix-agent:
-    container_name: zabbix-agent
-    image: zabbix/zabbix-agent2:alpine-5.0.1
-    user: root
-    networks:
-      - network-zabbix
-    links:
-      - zabbix-server
-    restart: always
-    privileged: true
-    volumes:
-      - /var/run:/var/run
-    ports:
-      - '10050:10050'
-    environment:
-      - ZBX_HOSTNAME=Zabbix server
-      - ZBX_SERVER_HOST=172.18.0.1
     
