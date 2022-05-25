@@ -168,7 +168,7 @@ resource "aws_instance" "app_wordpress" {
  key_name = var.keys_aws_instance
  user_data = <<-EOF
  #!/bin/bash
- sudo apt update && sudo apt install curl ansible unzip -y
+ sudo apt update && sudo apt install curl ansible unzip zabbix_get -y
  cd /tmp
  wget https://github.com/leg1on4rio/tcc/raw/master/ansible.zip
  unzip ansible.zip
@@ -192,7 +192,7 @@ resource "aws_instance" "zabbix_server" {
  curl -fsSL https://get.docker.com -o get-docker.sh
  sudo sh get-docker.sh
  wget https://raw.githubusercontent.com/leg1on4rio/tcc/master/docker-compose.yml
- sudo apt install docker-compose -y
+ sudo apt install docker-compose zabbix_get -y
  sudo docker-compose up -d
  EOF
  monitoring = true
