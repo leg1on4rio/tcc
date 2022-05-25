@@ -184,7 +184,7 @@ resource "aws_instance" "app_wordpress" {
 
 resource "aws_instance" "zabbix_server" {
  ami = var.ami_aws_instance
- instance_type = var.type_aws_instance
+ instance_type = "t3.small"
  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
  key_name = var.keys_aws_instance
  user_data = <<-EOF
