@@ -1,0 +1,102 @@
+{
+    "zabbix_export": {
+        "version": "6.0",
+        "date": "2022-05-30T13:17:03Z",
+        "groups": [
+            {
+                "uuid": "dc579cd7a1a34222933f24f52a68bcd8",
+                "name": "Linux servers"
+            },
+            {
+                "uuid": "a571c0d144b14fd4a87a9d9b2aa9fcd6",
+                "name": "Templates/Applications"
+            },
+            {
+                "uuid": "e960332b3f6c46a1956486d4f3f99fce",
+                "name": "Templates/Server hardware"
+            },
+            {
+                "uuid": "6f6799aa69e844b4b3918f779f2abf08",
+                "name": "Zabbix servers"
+            }
+        ],
+        "hosts": [
+            {
+                "host": "Wordpress APP",
+                "name": "Wordpress APP",
+                "templates": [
+                    {
+                        "name": "Linux by Zabbix agent"
+                    },
+                    {
+                        "name": "Monitor HTTP 80"
+                    },
+                    {
+                        "name": "Nginx by Zabbix agent"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "Linux servers"
+                    },
+                    {
+                        "name": "Templates/Applications"
+                    },
+                    {
+                        "name": "Templates/Server hardware"
+                    }
+                ],
+                "interfaces": [
+                    {
+                        "ip": "10.0.1.14",
+                        "interface_ref": "if1"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "PHP FPM Status",
+                        "key": "proc.num[php-fpm7.4]",
+                        "delay": "15s",
+                        "interface_ref": "if1",
+                        "triggers": [
+                            {
+                                "expression": "last(/Wordpress APP/proc.num[php-fpm7.4])=0",
+                                "name": "PHP FPM fora do ar",
+                                "priority": "HIGH"
+                            }
+                        ]
+                    }
+                ],
+                "inventory": {
+                    "name": "ip-10-0-1-14",
+                    "os": "Linux version 5.13.0-1025-aws (buildd@lcy02-amd64-113) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubun"
+                },
+                "inventory_mode": "AUTOMATIC"
+            },
+            {
+                "host": "Zabbix server",
+                "name": "Zabbix server",
+                "templates": [
+                    {
+                        "name": "Linux by Zabbix agent"
+                    },
+                    {
+                        "name": "Zabbix server health"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "Zabbix servers"
+                    }
+                ],
+                "interfaces": [
+                    {
+                        "ip": "10.0.1.27",
+                        "interface_ref": "if1"
+                    }
+                ],
+                "inventory_mode": "DISABLED"
+            }
+        ]
+    }
+}
