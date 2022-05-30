@@ -148,6 +148,15 @@ resource "aws_security_group" "allow_ssh" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+
+    ingress {
+    description      = "Zabbix interno"
+    from_port        = 10050
+    to_port          = 10051
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
   egress {
     from_port        = 0
     to_port          = 0
